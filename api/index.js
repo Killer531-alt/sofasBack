@@ -4,7 +4,13 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: [
+    'https://ortizmuebles.onrender.com',
+    'http://localhost:5500', // para pruebas locales si usas Live Server
+  ],
+  credentials: true
+}));
 app.use(express.json());
 
 const PORT = process.env.PORT || 4000;
