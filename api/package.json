@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "cors": "^2.8.5",
-    "dotenv": "^17.2.4",
+    "dotenv": "^17.2.3",
     "express": "^5.1.0",
     "fs-extra": "^11.3.2",
     "mongoose": "^8.19.2",
