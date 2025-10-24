@@ -24,6 +24,8 @@ mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true 
 app.use('/api/refaccion', require('./routes/refaccion'));
 app.use('/api/cita', require('./routes/cita'));
 app.use('/api/personalizacion', require('./routes/personalizacion'));
+app.use('/api/inventario', require('./routes/inventario'));
+app.use('/api/factura', require('./routes/factura'));
 
 app.get('/', (req, res) => {
   res.send('Orlando Ortiz Muebles API is running');
