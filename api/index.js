@@ -5,11 +5,11 @@ const cors = require('cors');
 
 const app = express();
 app.use(cors({
-  origin: [
-    'https://ortizmuebles.onrender.com',
-    'http://localhost:5500', // para pruebas locales si usas Live Server
-  ],
-  credentials: true
+  origin: '*', // Permite todos los orígenes
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Métodos permitidos
+  allowedHeaders: ['Content-Type', 'Authorization'], // Headers permitidos
+  credentials: true,
+  optionsSuccessStatus: 204 // Para navegadores antiguos y algunos SmartTVs
 }));
 app.use(express.json());
 
