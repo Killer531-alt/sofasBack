@@ -48,6 +48,45 @@ router.get('/', async (req, res) => {
 });
 
 // Read one - Obtener una factura específica
+
+// Generate and download PDF
+router.get('/:id/pdf', async (req, res) => {
+    try {
+        const factura = await Factura.findById(req.params.id).populate('items.producto');
+        if (!factura) {
+            return res.status(404).json({ error: 'Factura no encontrada' });
+        }
+        
+        const pdfPath = await pdfGenerator.generateFacturaPDF(factura);
+        res.download(pdfPath, `factura-${factura.numero_factura}.pdf`, (err) => {
+            if (err) {
+                console.error('Error al enviar PDF:', err);
+                if (!res.headersSent) {
+                    res.status(500).json({ error: 'Error al generar PDF' });
+                }
+            }
+        });
+    } catch (err) {
+        console.error('Error en generación de PDF:', err);
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Cambiar estado de factura
+router.put('/:id/estado', async (req, res) => {
+    try {
+        const { estado } = req.body;
+        const factura = await Factura.findByIdAndUpdate(
+            req.params.id,
+            { estado },
+            { new: true }
+        );
+        if (!factura) return res.status(404).json({ error: 'Factura no encontrada' });
+        res.json(factura);
+    } catch (err) {
+        res.status(400).json({ error: err.message });
+    }
+});
 router.get('/:id', async (req, res) => {
     try {
         const factura = await Factura.findById(req.params.id).populate('items.producto');
